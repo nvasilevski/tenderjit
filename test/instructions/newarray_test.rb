@@ -15,7 +15,10 @@ class TenderJIT
     end
 
     def test_empty_array
-      jit.compile(method(:empty_array))
+      mm = method(:empty_array)
+      assert_has_insn mm, insn: :newarray
+
+      jit.compile(mm)
       jit.enable!
       v = empty_array
       jit.disable!
@@ -26,7 +29,10 @@ class TenderJIT
     end
 
     def test_newarray_filled
-      jit.compile(method(:filled_array))
+      mm = method(:filled_array)
+      assert_has_insn mm, insn: :newarray
+
+      jit.compile(mm)
       jit.enable!
       v = filled_array
       jit.disable!

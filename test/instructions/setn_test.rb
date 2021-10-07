@@ -22,7 +22,10 @@ class TenderJIT
     end
 
     def test_setn
-      jit.compile method(:opt_setn)
+      mm = method(:opt_setn)
+      assert_has_insn mm, insn: :setn
+
+      jit.compile mm
       assert_equal 1, jit.compiled_methods
       assert_equal 0, jit.executed_methods
       assert_equal 0, jit.exits

@@ -17,7 +17,10 @@ class TenderJIT
     end
 
     def test_dup
-      jit.compile(method(:dup))
+      mm = method(:dup)
+      assert_has_insn mm, insn: :dup
+
+      jit.compile(mm)
       jit.enable!
       res = dup "something"
       jit.disable!
